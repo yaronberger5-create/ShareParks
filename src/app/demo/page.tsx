@@ -47,7 +47,7 @@ function DemoInner() {
       {/* Spacer for fixed nav + breathing room */}
       <div className={role === 'none' ? '' : 'h-[78px]'} />
 
-      <div className="max-w-md mx-auto bg-white min-h-[calc(100dvh-78px)]">
+      <div className="w-full bg-white min-h-[calc(100dvh-78px)]">
         {/* Home */}
         {screen === 'home' && role === 'none' && <HomeInteractive />}
         {screen === 'home' && role === 'renter' && <DemoScreens screen="renter-home" />}
@@ -80,7 +80,7 @@ function DemoInner() {
       </div>
 
       {/* Footer */}
-      <footer className="max-w-md mx-auto bg-gray-800 text-white px-6 py-8">
+      <footer className="w-full bg-gray-800 text-white px-6 py-8">
         <div className="flex items-center justify-center gap-2.5 mb-4">
           <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
             <span className="text-xs font-black text-white">P</span>
