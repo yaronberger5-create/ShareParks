@@ -76,7 +76,26 @@ export function SideBarWithButton({ role }: { role: string }) {
               <SideLink href="/demo?s=profile" icon="👤" label="הפרופיל שלי" onClick={() => setIsOpen(false)} />
               <SideLink href="/demo?r=renter&s=payment" icon="💳" label="אמצעי תשלום" onClick={() => setIsOpen(false)} />
               <SideLink href="/demo?s=settings" icon="⚙️" label="הגדרות" onClick={() => setIsOpen(false)} />
-              <SideLink href="/login" icon="🚪" label="התנתק" onClick={() => setIsOpen(false)} />
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  // Clear Supabase session
+                  import('@supabase/ssr').then(({ createBrowserClient }) => {
+                    const supabase = createBrowserClient(
+                      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+                    );
+                    supabase.auth.signOut().then(() => {
+                      window.location.href = '/login';
+                    });
+                  });
+                }}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 w-full"
+              >
+                <span className="text-lg">🚪</span>
+                <span>התנתק</span>
+              </button>
             </div>
 
             {/* Footer */}
