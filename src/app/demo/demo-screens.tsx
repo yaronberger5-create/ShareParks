@@ -160,8 +160,17 @@ function Wallet() {
 function Terms() {
   return (
     <div>
-      <div className="bg-gray-800 text-white px-5 py-3 flex items-center justify-center relative">
-        <a href="/demo?s=home" className="absolute right-4 top-3 text-gray-400 text-sm py-1">חזרה →</a>
+      <div className="bg-gray-800 text-white px-5 py-3 text-center relative">
+        <a href="/" className="absolute right-4 top-5 text-gray-400 text-sm">חזרה →</a>
+        <a href="/" className="inline-flex items-center gap-2 mb-2">
+          <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center">
+            <span className="text-base font-black text-white">P</span>
+          </div>
+          <span className="text-2xl font-black tracking-tight">
+            <span className="text-white">Share</span>
+            <span className="text-orange-500">Parks</span>
+          </span>
+        </a>
         <h1 className="text-lg font-bold">📋 תקנון</h1>
       </div>
       <div className="px-4 py-5 space-y-4 text-sm text-gray-600 leading-relaxed">
