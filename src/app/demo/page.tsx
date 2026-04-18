@@ -384,6 +384,16 @@ function SettingsScreen() {
           </a>
         </div>
 
+        {/* Switch role */}
+        <div className="bg-orange-50 rounded-2xl border border-orange-200 p-4">
+          <h3 className="font-bold text-black mb-2">🔄 החלפת תפקיד</h3>
+          <p className="text-xs text-gray-500 mb-3">אתה יכול להיות גם נהג וגם משכיר. בחר את המצב שלך:</p>
+          <div className="grid grid-cols-2 gap-2">
+            <a href="/demo?r=renter&s=home" className="py-3 rounded-xl bg-orange-500 text-white text-sm font-bold text-center">🚗 מצב נהג</a>
+            <a href="/demo?r=owner&s=home" className="py-3 rounded-xl bg-gray-800 text-white text-sm font-bold text-center">🅿️ מצב משכיר</a>
+          </div>
+        </div>
+
         {/* Danger zone */}
         <div className="bg-red-50 rounded-2xl border border-red-200 p-4">
           <h3 className="font-bold text-red-600 mb-2">אזור מסוכן</h3>

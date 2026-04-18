@@ -24,7 +24,17 @@ function RenterHome() {
           <p className="text-xs text-gray-400">מחפש חניה? בוא נמצא לך.</p>
         </div>
       </div>
-      <a href="/demo?r=renter&s=verify-driver" className="block w-full py-5 rounded-2xl bg-orange-500 text-white text-lg font-black text-center shadow-xl shadow-orange-200">📍 חפש חניה ליד המיקום שלי</a>
+      {/* Search bar */}
+      <a href="/demo?r=renter&s=verify-driver" className="block w-full rounded-2xl bg-gray-50 border border-gray-200 px-4 py-4 active:bg-gray-100 transition-colors">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl">🔍</span>
+          <div>
+            <p className="text-base font-bold text-gray-400">לאן נוסעים?</p>
+            <p className="text-xs text-gray-300">חפש כתובת, עיר או חניה</p>
+          </div>
+        </div>
+      </a>
+      <a href="/demo?r=renter&s=locate" className="block w-full py-4 rounded-2xl bg-orange-500 text-white text-lg font-black text-center shadow-xl shadow-orange-200">📍 חפש ליד המיקום שלי</a>
       <div className="bg-green-50 rounded-2xl border border-green-200 p-4">
         <div className="flex items-center gap-2 mb-2"><div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" /><span className="text-sm font-bold text-green-700">חניה פעילה</span></div>
         <p className="font-bold text-black">אגס 9, אשדוד</p>
