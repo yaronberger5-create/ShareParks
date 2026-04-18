@@ -51,8 +51,8 @@ export function RenterFlowInteractive({ initialStep = 'locate' }: { initialStep?
   const [showSuggestions, setShowSuggestions] = useState(false);
 
   const filteredSuggestions = searchQuery.length > 0
-    ? CITIES_AND_STREETS.filter((s) => s.label.includes(searchQuery)).slice(0, 6)
-    : [];
+    ? CITIES_AND_STREETS.filter((s) => s.label.includes(searchQuery)).slice(0, 8)
+    : CITIES_AND_STREETS.filter((s) => s.type === 'city').slice(0, 8);
 
   const selected = PARKINGS.find((p) => p.id === selectedId);
   const totalPrice = selected ? selected.price * duration : 0;
@@ -105,12 +105,12 @@ export function RenterFlowInteractive({ initialStep = 'locate' }: { initialStep?
                   type="text"
                   value={searchQuery}
                   onChange={(e) => { setSearchQuery(e.target.value); setShowSuggestions(true); }}
-                  onFocus={() => searchQuery.length > 0 && setShowSuggestions(true)}
+                  onFocus={() => setShowSuggestions(true)}
                   placeholder="🔍 הקלד עיר או רחוב..."
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-base outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100"
                 />
                 {showSuggestions && filteredSuggestions.length > 0 && (
-                  <div className="absolute top-full inset-x-0 mt-1 bg-white rounded-xl border border-gray-200 shadow-xl z-30 overflow-hidden">
+                  <div className="absolute top-full inset-x-0 mt-1 bg-white rounded-xl border border-gray-200 shadow-xl z-30 overflow-hidden max-h-64 overflow-y-auto">
                     {filteredSuggestions.map((s) => (
                       <button
                         key={s.label}
