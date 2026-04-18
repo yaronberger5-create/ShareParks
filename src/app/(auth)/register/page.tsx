@@ -1,39 +1,72 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { registerWithPhone } from '@/actions/auth-actions';
-import { User, Phone } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { Logo } from '@/components/logo';
 import Link from 'next/link';
+import { createBrowserClient } from '@supabase/ssr';
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isOwner, setIsOwner] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!fullName.trim() || !phone.trim()) return;
+    if (!fullName.trim() || !email.trim() || !password.trim()) return;
+    if (password.length < 6) { setError('סיסמה חייבת להיות לפחות 6 תווים'); return; }
 
     setError(null);
-    startTransition(async () => {
-      const result = await registerWithPhone({ fullName, phone, isOwner });
-      if (result.success) {
-        router.push(`/verify?phone=${encodeURIComponent(result.phone)}&new=true`);
-      } else {
-        setError(result.error);
-      }
+    setIsPending(true);
+
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
+    const { error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          is_owner: isOwner,
+        },
+      },
     });
+
+    setIsPending(false);
+
+    if (authError) {
+      setError(authError.message);
+    } else {
+      setSuccess(true);
+      setTimeout(() => {
+        router.push('/');
+        router.refresh();
+      }, 1500);
+    }
+  }
+
+  if (success) {
+    return (
+      <div dir="rtl" className="min-h-dvh bg-white flex flex-col items-center justify-center px-6 text-center">
+        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6 text-4xl">✅</div>
+        <h2 className="text-2xl font-black text-black mb-2">נרשמת בהצלחה!</h2>
+        <p className="text-gray-500">מעביר אותך לדף הבית...</p>
+      </div>
+    );
   }
 
   return (
     <div dir="rtl" className="min-h-dvh bg-white flex flex-col">
-      {/* Header */}
-      <div className="bg-black px-6 pt-16 pb-10">
+      <div className="bg-gray-800 px-6 pt-16 pb-10">
         <div className="max-w-sm mx-auto">
           <div className="mb-6">
             <Logo size="lg" variant="light" />
@@ -43,7 +76,6 @@ export default function RegisterPage() {
         </div>
       </div>
 
-      {/* Form */}
       <div className="flex-1 px-6 py-8">
         <form onSubmit={handleSubmit} className="max-w-sm mx-auto space-y-5">
           <label className="block">
@@ -62,34 +94,42 @@ export default function RegisterPage() {
           </label>
 
           <label className="block">
-            <span className="text-sm font-medium text-gray-500 block mb-2">מספר טלפון</span>
+            <span className="text-sm font-medium text-gray-500 block mb-2">אימייל</span>
             <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100 transition-all">
-              <Phone size={18} className="text-gray-400" />
+              <Mail size={18} className="text-gray-400" />
               <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="050-1234567"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
                 dir="ltr"
                 className="flex-1 bg-transparent outline-none text-base text-black placeholder:text-gray-300"
               />
             </div>
           </label>
 
-          {/* Role selector */}
+          <label className="block">
+            <span className="text-sm font-medium text-gray-500 block mb-2">סיסמה</span>
+            <div className="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 bg-gray-50 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100 transition-all">
+              <Lock size={18} className="text-gray-400" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="לפחות 6 תווים"
+                dir="ltr"
+                className="flex-1 bg-transparent outline-none text-base text-black placeholder:text-gray-300"
+              />
+            </div>
+          </label>
+
           <div>
             <span className="text-sm font-medium text-gray-500 block mb-2">מה אתה מחפש?</span>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => setIsOwner(false)}
-                className={`
-                  py-4 rounded-xl text-center font-bold transition-all
-                  ${!isOwner
-                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-200'
-                    : 'bg-gray-50 border border-gray-200 text-gray-500'
-                  }
-                `}
+                className={`py-4 rounded-xl text-center font-bold transition-all ${!isOwner ? 'bg-orange-500 text-white shadow-lg shadow-orange-200' : 'bg-gray-50 border border-gray-200 text-gray-500'}`}
               >
                 <span className="text-2xl block mb-1">🚗</span>
                 <span className="text-sm">מחפש חניה</span>
@@ -97,13 +137,7 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={() => setIsOwner(true)}
-                className={`
-                  py-4 rounded-xl text-center font-bold transition-all
-                  ${isOwner
-                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-200'
-                    : 'bg-gray-50 border border-gray-200 text-gray-500'
-                  }
-                `}
+                className={`py-4 rounded-xl text-center font-bold transition-all ${isOwner ? 'bg-orange-500 text-white shadow-lg shadow-orange-200' : 'bg-gray-50 border border-gray-200 text-gray-500'}`}
               >
                 <span className="text-2xl block mb-1">🅿️</span>
                 <span className="text-sm">משכיר חניה</span>
@@ -117,14 +151,10 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            disabled={isPending || !fullName.trim() || !phone.trim()}
-            className="
-              w-full py-4 rounded-2xl bg-orange-500 text-white text-lg font-black
-              shadow-xl shadow-orange-200 transition-all active:scale-[0.97]
-              disabled:opacity-40 disabled:shadow-none
-            "
+            disabled={isPending || !fullName.trim() || !email.trim() || !password.trim()}
+            className="w-full py-4 rounded-2xl bg-orange-500 text-white text-lg font-black shadow-xl shadow-orange-200 transition-all active:scale-[0.97] disabled:opacity-40 disabled:shadow-none"
           >
-            {isPending ? 'שולח קוד...' : 'הרשמה'}
+            {isPending ? 'נרשם...' : 'הרשמה'}
           </button>
 
           <p className="text-center text-sm text-gray-400">
