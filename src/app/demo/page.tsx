@@ -48,7 +48,7 @@ function DemoInner() {
       {/* Spacer for fixed nav + orange stripe */}
       <div className={role === 'none' ? '' : 'h-[78px] bg-orange-500'} />
 
-      <div className="w-full bg-white min-h-[calc(100dvh-78px)]">
+      <div className="w-full bg-white">
         {/* Home */}
         {screen === 'home' && role === 'none' && <HomeInteractive />}
         {screen === 'home' && role === 'renter' && <DemoScreens screen="renter-home" />}
