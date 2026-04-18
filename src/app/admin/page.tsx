@@ -22,17 +22,18 @@ export default function AdminDashboard() {
     <div dir="rtl" className="min-h-dvh bg-gray-100">
       {/* Header */}
       <header className="bg-gray-800 text-white px-4 py-3">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center">
-              <span className="text-sm font-black text-white">P</span>
+        <div className="max-w-6xl mx-auto flex items-center justify-center relative">
+          <a href="/" className="absolute right-4 text-gray-400 text-sm hover:text-orange-500">חזרה →</a>
+          <a href="/admin" className="flex items-center gap-2">
+            <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center">
+              <span className="text-base font-black text-white">P</span>
             </div>
-            <div>
-              <span className="text-lg font-black">Share<span className="text-orange-500">Parks</span></span>
-              <span className="text-xs text-gray-400 block">Admin Dashboard</span>
-            </div>
-          </div>
-          <a href="/demo" className="text-xs text-gray-400 hover:text-orange-500">חזרה לאתר →</a>
+            <span className="text-2xl font-black tracking-tight">
+              <span className="text-white">Share</span>
+              <span className="text-orange-500">Parks</span>
+            </span>
+          </a>
+          <span className="absolute left-4 text-xs text-gray-500">Admin</span>
         </div>
       </header>
 
