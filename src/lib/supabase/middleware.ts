@@ -30,7 +30,8 @@ export async function updateSession(request: NextRequest) {
   const isPublicPage = request.nextUrl.pathname.startsWith('/login')
     || request.nextUrl.pathname.startsWith('/register')
     || request.nextUrl.pathname.startsWith('/verify')
-    || request.nextUrl.pathname.startsWith('/demo');
+    || request.nextUrl.pathname.startsWith('/demo')
+    || request.nextUrl.pathname.startsWith('/admin');
 
   // Not logged in and trying to access protected pages
   if (!user && !isPublicPage && request.nextUrl.pathname !== '/') {
