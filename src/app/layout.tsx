@@ -14,8 +14,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.svg',
-    apple: '/apple-touch-icon.svg',
+    apple: '/icon-192.svg',
   },
+  manifest: '/manifest.json',
 };
 
 export const viewport: Viewport = {
@@ -23,7 +24,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#000000',
+  themeColor: '#374151',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -31,6 +32,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl" suppressHydrationWarning>
       <body className="bg-white text-black antialiased" suppressHydrationWarning>
         {children}
+        <script dangerouslySetInnerHTML={{ __html: `
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+          }
+        `}} />
       </body>
     </html>
   );
