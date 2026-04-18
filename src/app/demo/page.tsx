@@ -1,7 +1,17 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
+import { createBrowserClient } from '@supabase/ssr';
+
+function useAutoName() {
+  const [n, setN] = useState('');
+  useEffect(() => {
+    const sb = createBrowserClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+    sb.auth.getUser().then(({ data }) => { if (data.user?.user_metadata?.full_name) setN(data.user.user_metadata.full_name); });
+  }, []);
+  return n || 'משתמש';
+}
 import { OwnerOnboardInteractive } from './owner-onboard-interactive';
 import { RenterFlowInteractive } from './renter-flow-interactive';
 import { HomeInteractive } from './home-interactive';
@@ -260,7 +270,9 @@ function PaymentScreen() {
 }
 
 function ProfileScreen() {
-  const [name, setName] = useState('ירון ברגר');
+  const autoName = useAutoName();
+  const [name, setName] = useState('');
+  useEffect(() => { if (autoName !== 'משתמש') setName(autoName); }, [autoName]);
   const [email, setEmail] = useState('yaronberger5@gmail.com');
   const [phone, setPhone] = useState('050-6445333');
   const [saved, setSaved] = useState(false);

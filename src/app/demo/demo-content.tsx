@@ -127,7 +127,7 @@ function RenterHomeScreen() {
           <span className="text-base font-black text-white">P</span>
         </div>
         <div>
-          <h1 className="text-lg font-black text-black">שלום, ירון 👋</h1>
+          <h1 className="text-lg font-black text-black">שלום 👋</h1>
           <p className="text-xs text-gray-400">מחפש חניה? בוא נמצא לך.</p>
         </div>
       </div>
@@ -212,7 +212,7 @@ function OwnerHomeScreen() {
           <span className="text-base font-black text-orange-500">P</span>
         </div>
         <div>
-          <h1 className="text-lg font-black text-black">שלום, ירון 👋</h1>
+          <h1 className="text-lg font-black text-black">שלום 👋</h1>
           <p className="text-xs text-gray-400">הנה מה שקורה בחניה שלך.</p>
         </div>
       </div>

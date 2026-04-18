@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { createBrowserClient } from '@supabase/ssr';
 
 export function SideBarWithButton({ role }: { role: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ export function SideBarWithButton({ role }: { role: string }) {
                 </Link>
                 <button type="button" onClick={() => setIsOpen(false)} className="text-gray-400 text-lg p-1">✕</button>
               </div>
-              <p className="text-gray-400 text-xs">שלום, ירון 👋</p>
+              <UserGreeting />
             </div>
 
             {/* Menu */}
@@ -120,4 +121,13 @@ function SideLink({ href, icon, label, onClick }: { href: string; icon: string; 
       <span>{label}</span>
     </Link>
   );
+}
+
+function UserGreeting() {
+  const [name, setName] = useState('');
+  useEffect(() => {
+    const sb = createBrowserClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+    sb.auth.getUser().then(({ data }) => { if (data.user?.user_metadata?.full_name) setName(data.user.user_metadata.full_name); });
+  }, []);
+  return <p className="text-gray-400 text-xs">שלום, {name || 'אורח'} 👋</p>;
 }

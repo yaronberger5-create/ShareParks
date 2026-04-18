@@ -1,5 +1,23 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { createBrowserClient } from '@supabase/ssr';
+
+function useUserName() {
+  const [name, setName] = useState('');
+  useEffect(() => {
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    supabase.auth.getUser().then(({ data }) => {
+      const meta = data.user?.user_metadata;
+      if (meta?.full_name) setName(meta.full_name);
+    });
+  }, []);
+  return name || 'משתמש';
+}
+
 type ScreenType = 'renter-home' | 'owner-home' | 'bookings' | 'wallet' | 'terms';
 
 export function DemoScreens({ screen }: { screen: ScreenType }) {
@@ -13,14 +31,15 @@ export function DemoScreens({ screen }: { screen: ScreenType }) {
 }
 
 function RenterHome() {
+  const userName = useUserName();
   return (
     <div className="px-4 py-5 space-y-4">
       <div className="flex items-center gap-3 mb-2">
         <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center">
-          <span className="text-base font-black text-white">P</span>
+          <span className="text-base font-black text-white">{userName.charAt(0)}</span>
         </div>
         <div>
-          <h1 className="text-lg font-black text-black">שלום, ירון 👋</h1>
+          <h1 className="text-lg font-black text-black">שלום, {userName} 👋</h1>
           <p className="text-xs text-gray-400">מחפש חניה? בוא נמצא לך.</p>
         </div>
       </div>
@@ -64,11 +83,12 @@ function RenterHome() {
 }
 
 function OwnerHome() {
+  const userName = useUserName();
   return (
     <div className="px-4 py-5 space-y-4">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-12 h-12 rounded-xl bg-gray-800 flex items-center justify-center"><span className="text-base font-black text-orange-500">P</span></div>
-        <div><h1 className="text-lg font-black text-black">שלום, ירון 👋</h1><p className="text-xs text-gray-400">הנה מה שקורה בחניה שלך.</p></div>
+        <div className="w-12 h-12 rounded-xl bg-gray-800 flex items-center justify-center"><span className="text-base font-black text-orange-500">{userName.charAt(0)}</span></div>
+        <div><h1 className="text-lg font-black text-black">שלום, {userName} 👋</h1><p className="text-xs text-gray-400">הנה מה שקורה בחניה שלך.</p></div>
       </div>
       <div className="bg-white rounded-2xl border border-gray-200 p-4">
         <div className="flex items-center justify-between mb-3">
