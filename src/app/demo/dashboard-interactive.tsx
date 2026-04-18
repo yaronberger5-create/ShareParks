@@ -259,11 +259,9 @@ export function DashboardInteractive() {
                   { label: '6 שעות', hours: 6 },
                   { label: '8 שעות', hours: 8 },
                 ].map((opt) => {
-                  const targetTime = opt.time ?? (() => {
-                    const d = new Date();
-                    d.setHours(d.getHours() + opt.hours);
-                    return d.toTimeString().slice(0, 5);
-                  })();
+                  const d = new Date();
+                  d.setHours(d.getHours() + opt.hours);
+                  const targetTime = d.toTimeString().slice(0, 5);
                   return (
                     <button
                       key={opt.label}
