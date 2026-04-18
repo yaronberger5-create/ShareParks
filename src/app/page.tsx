@@ -1,5 +1,2 @@
-import { redirect } from 'next/navigation';
-
-export default function HomePage() {
-  redirect('/demo');
-}
+// Re-export the demo page as the main page
+export { default } from './demo/page';

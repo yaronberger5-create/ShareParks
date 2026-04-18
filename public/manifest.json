@@ -2,7 +2,7 @@
   "name": "ShareParks — חניה שיתופית",
   "short_name": "ShareParks",
   "description": "מצא חניה פנויה ברגע או השכר את שלך",
-  "start_url": "/demo",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#374151",
