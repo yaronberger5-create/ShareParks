@@ -276,14 +276,14 @@ export function DriverVerification() {
           <span className="text-lg">✅</span>
           <span className="text-sm font-bold text-green-700">אומת בהצלחה!</span>
         </div>
-        <p className="text-xs text-green-600">עכשיו אפשר לחפש ולהזמין חניות.</p>
+        <p className="text-xs text-green-600">עכשיו צריך להוסיף אמצעי תשלום.</p>
       </div>
 
       <Link
-        href="/demo?r=renter&s=locate"
+        href="/demo?r=renter&s=payment"
         className="w-full max-w-sm py-4 rounded-2xl bg-orange-500 text-white text-lg font-black text-center block shadow-xl shadow-orange-200 active:scale-[0.97] transition-transform mb-3"
       >
-        📍 חפש חניה עכשיו
+        💳 הוסף כרטיס אשראי
       </Link>
       <Link
         href="/demo?r=renter&s=home"

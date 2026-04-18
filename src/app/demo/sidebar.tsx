@@ -74,6 +74,7 @@ export function SideBarWithButton({ role }: { role: string }) {
               <div className="border-t border-gray-100 my-3" />
               <p className="text-[10px] font-bold text-gray-400 uppercase px-3 mb-2">חשבון</p>
               <SideLink href="/demo?s=profile" icon="👤" label="הפרופיל שלי" onClick={() => setIsOpen(false)} />
+              <SideLink href="/demo?r=renter&s=payment" icon="💳" label="אמצעי תשלום" onClick={() => setIsOpen(false)} />
               <SideLink href="/demo?s=settings" icon="⚙️" label="הגדרות" onClick={() => setIsOpen(false)} />
               <SideLink href="/login" icon="🚪" label="התנתק" onClick={() => setIsOpen(false)} />
             </div>

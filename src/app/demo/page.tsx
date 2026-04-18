@@ -61,6 +61,7 @@ function DemoInner() {
         {screen === 'session' && <RenterFlowInteractive initialStep="active" />}
         {screen === 'bookings' && <DemoScreens screen="bookings" />}
         {screen === 'verify-driver' && <DriverVerification />}
+        {screen === 'payment' && <PaymentScreen />}
 
         {/* Owner */}
         {screen === 'onboard' && <OwnerOnboardInteractive />}
@@ -103,6 +104,156 @@ function DemoInner() {
 
       <Chatbot />
       <SideBarWithButton role={role} />
+    </div>
+  );
+}
+
+function PaymentScreen() {
+  const [cardNumber, setCardNumber] = useState('');
+  const [expiry, setExpiry] = useState('');
+  const [cvv, setCvv] = useState('');
+  const [holderName, setHolderName] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  function formatCard(val: string) {
+    const digits = val.replace(/\D/g, '').slice(0, 16);
+    return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
+  }
+
+  function formatExpiry(val: string) {
+    const digits = val.replace(/\D/g, '').slice(0, 4);
+    if (digits.length > 2) return digits.slice(0, 2) + '/' + digits.slice(2);
+    return digits;
+  }
+
+  function handleSave() {
+    if (!cardNumber || !expiry || !cvv || !holderName) return;
+    setSaving(true);
+    setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+    }, 1500);
+  }
+
+  if (saved) {
+    return (
+      <div className="min-h-[60dvh] flex flex-col items-center justify-center px-6 text-center">
+        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-6 text-4xl">✅</div>
+        <h2 className="text-2xl font-black text-black mb-2">כרטיס נשמר!</h2>
+        <p className="text-sm text-gray-500 mb-2">****{cardNumber.replace(/\s/g, '').slice(-4)}</p>
+        <p className="text-xs text-gray-400 mb-6">עכשיו אפשר להזמין חניות</p>
+        <a href="/demo?r=renter&s=locate" className="w-full py-4 rounded-2xl bg-orange-500 text-white text-lg font-black text-center shadow-xl shadow-orange-200 block mb-3">📍 חפש חניה</a>
+        <a href="/demo?r=renter&s=home" className="text-sm text-gray-400">חזרה לדף הבית →</a>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="bg-gray-800 text-white px-5 py-3 flex items-center justify-center relative">
+        <a href="/demo?r=renter&s=home" className="absolute right-4 top-3 text-gray-400 text-sm py-1">חזרה →</a>
+        <h1 className="text-lg font-bold">💳 אמצעי תשלום</h1>
+      </div>
+      <div className="px-4 py-5 space-y-4">
+        <div className="bg-orange-50 rounded-xl border border-orange-200 px-4 py-3 text-sm text-orange-700">
+          ⚠️ חובה להוסיף כרטיס אשראי לפני הזמנת חניה
+        </div>
+
+        {/* Card preview */}
+        <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl p-5 text-white relative overflow-hidden">
+          <div className="absolute top-3 left-3 opacity-20 text-6xl">💳</div>
+          <p className="text-xs text-gray-400 mb-4">ShareParks</p>
+          <p className="text-xl font-bold tracking-widest mb-4" dir="ltr">
+            {cardNumber || '•••• •••• •••• ••••'}
+          </p>
+          <div className="flex justify-between">
+            <div>
+              <p className="text-[10px] text-gray-400">שם בעל הכרטיס</p>
+              <p className="text-sm font-bold">{holderName || '---'}</p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-400">תוקף</p>
+              <p className="text-sm font-bold" dir="ltr">{expiry || 'MM/YY'}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Form */}
+        <label className="block">
+          <span className="text-sm text-gray-500 block mb-1">מספר כרטיס</span>
+          <input
+            type="text"
+            value={cardNumber}
+            onChange={(e) => setCardNumber(formatCard(e.target.value))}
+            placeholder="1234 5678 9012 3456"
+            dir="ltr"
+            inputMode="numeric"
+            maxLength={19}
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-base outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 tracking-wider"
+          />
+        </label>
+
+        <label className="block">
+          <span className="text-sm text-gray-500 block mb-1">שם בעל הכרטיס</span>
+          <input
+            type="text"
+            value={holderName}
+            onChange={(e) => setHolderName(e.target.value)}
+            placeholder="ישראל ישראלי"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-base outline-none focus:border-orange-400"
+          />
+        </label>
+
+        <div className="grid grid-cols-2 gap-3">
+          <label className="block">
+            <span className="text-sm text-gray-500 block mb-1">תוקף</span>
+            <input
+              type="text"
+              value={expiry}
+              onChange={(e) => setExpiry(formatExpiry(e.target.value))}
+              placeholder="MM/YY"
+              dir="ltr"
+              inputMode="numeric"
+              maxLength={5}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-base outline-none focus:border-orange-400"
+            />
+          </label>
+          <label className="block">
+            <span className="text-sm text-gray-500 block mb-1">CVV</span>
+            <input
+              type="password"
+              value={cvv}
+              onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
+              placeholder="•••"
+              dir="ltr"
+              inputMode="numeric"
+              maxLength={3}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-base outline-none focus:border-orange-400"
+            />
+          </label>
+        </div>
+
+        <div className="bg-green-50 rounded-xl border border-green-200 px-4 py-3 text-xs text-green-700 space-y-1">
+          <p>🔒 החיבור מאובטח (SSL)</p>
+          <p>💳 פרטי הכרטיס לא נשמרים אצלנו</p>
+          <p>✓ עומד בתקן PCI DSS</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={saving || !cardNumber || !expiry || !cvv || !holderName}
+          className="w-full py-4 rounded-2xl bg-orange-500 text-white text-lg font-black text-center shadow-xl shadow-orange-200 active:scale-[0.97] transition-transform disabled:opacity-40 disabled:shadow-none"
+        >
+          {saving ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              שומר...
+            </span>
+          ) : '💾 שמור כרטיס'}
+        </button>
+      </div>
     </div>
   );
 }
