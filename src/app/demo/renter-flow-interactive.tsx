@@ -8,10 +8,10 @@ const PARKINGS = [
   { id: 'bank3', addr: 'הבנקים 3', city: 'אשדוד', area: 'סיטי', dist: 180, price: 18, rating: 4.5, reviews: 14, tags: ['מקורה', 'SUV', 'מצלמה'], availUntil: '16:30', hours: 2.5, type: 'hourly' as const },
   { id: 'hadkl5', addr: 'הדקל 5', city: 'אשדוד', area: 'רובע ו׳', dist: 300, price: 0, rating: 4.7, reviews: 11, tags: ['מקורה', 'תת קרקעי', 'שער חשמלי'], availUntil: '24/7', hours: 0, type: 'monthly' as const, monthlyPrice: 350 },
   { id: 'rog12', addr: 'רוגוזין 12', city: 'אשדוד', area: 'מרכז', dist: 450, price: 10, rating: 4.2, reviews: 8, tags: ['פתוחה'], availUntil: '20:00', hours: 5, type: 'hourly' as const },
-  { id: 'yeru44', addr: 'שד׳ ירושלים 44', city: 'אשדוד', area: 'רובע ב׳', dist: 800, price: 8, rating: 4.0, reviews: 5, tags: ['פתוחה', 'קל להגיע'], availUntil: '22:00', hours: 8, type: 'hourly' as const },
+  { id: 'yeru44', addr: 'שד׳ ירושלים 44', city: 'אשדוד', area: 'רובע ב׳', dist: 800, price: 8, rating: 4.0, reviews: 5, tags: ['פתוחה', 'קל להגיע'], availUntil: '22:00', hours: 8, type: 'hourly' as const, recommended: true, discount: 10 },
   { id: 'brit12', addr: 'שד׳ בני ברית 12', city: 'אשדוד', area: 'רובע ג׳', dist: 950, price: 0, rating: 4.6, reviews: 7, tags: ['מקורה', 'SUV', 'מצלמה', 'שער חשמלי'], availUntil: '24/7', hours: 0, type: 'monthly' as const, monthlyPrice: 450 },
   { id: 'herzl7', addr: 'הרצל 7', city: 'אשדוד', area: 'מרכז', dist: 1200, price: 15, rating: 4.9, reviews: 31, tags: ['מקורה', 'SUV', 'שער חשמלי'], availUntil: '17:00', hours: 3, type: 'hourly' as const },
-  { id: 'tamar22', addr: 'תמר 22', city: 'אשדוד', area: 'רובע ח׳', dist: 1500, price: 7, rating: 3.8, reviews: 3, tags: ['פתוחה'], availUntil: '21:00', hours: 5, type: 'hourly' as const },
+  { id: 'tamar22', addr: 'תמר 22', city: 'אשדוד', area: 'רובע ח׳', dist: 1500, price: 7, rating: 3.8, reviews: 3, tags: ['פתוחה'], availUntil: '21:00', hours: 5, type: 'hourly' as const, recommended: true, discount: 5 },
 ];
 
 type Step = 'locate' | 'list' | 'detail' | 'confirm' | 'success' | 'active';
@@ -297,6 +297,9 @@ export function RenterFlowInteractive({ initialStep = 'locate' }: { initialStep?
             const dist = p.dist < 1000 ? `${p.dist} מ׳` : `${(p.dist / 1000).toFixed(1)} ק״מ`;
             const isMonthly = p.type === 'monthly';
             const mp = 'monthlyPrice' in p ? (p as { monthlyPrice: number }).monthlyPrice : 0;
+            const isRecommended = 'recommended' in p && (p as { recommended?: boolean }).recommended;
+            const discountPct = 'discount' in p ? (p as { discount?: number }).discount ?? 0 : 0;
+            const effectivePrice = discountPct > 0 ? Math.round(p.price * (1 - discountPct / 100)) : p.price;
 
             return (
               <button
@@ -307,6 +310,14 @@ export function RenterFlowInteractive({ initialStep = 'locate' }: { initialStep?
                   isMonthly ? 'bg-blue-50 border-2 border-blue-300' : 'bg-white border border-gray-200'
                 }`}
               >
+                {/* Recommended badge */}
+                {isRecommended && !isMonthly && (
+                  <div className="bg-amber-500 text-white px-4 py-1.5 flex items-center justify-between">
+                    <span className="text-xs font-bold">⭐ חניה מומלצת</span>
+                    <span className="text-xs font-bold">הנחה {discountPct}%</span>
+                  </div>
+                )}
+
                 {/* Monthly badge */}
                 {isMonthly && (
                   <div className="bg-blue-500 text-white px-4 py-1.5 flex items-center justify-between">
@@ -350,7 +361,14 @@ export function RenterFlowInteractive({ initialStep = 'locate' }: { initialStep?
                     ) : (
                       <>
                         <span className="text-xl font-black text-black">{p.price}₪<span className="text-xs text-gray-400">/שעה</span></span>
-                        <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">~{p.price * duration}₪ ל-{duration} שעות</span>
+                        {discountPct > 0 ? (
+                          <>
+                            <span className="text-xs text-gray-400 line-through mr-1">{p.price}₪</span>
+                            <span className="text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full font-bold">~{effectivePrice * duration}₪ ל-{duration} שעות</span>
+                          </>
+                        ) : (
+                          <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">~{p.price * duration}₪ ל-{duration} שעות</span>
+                        )}
                       </>
                     )}
                   </div>
