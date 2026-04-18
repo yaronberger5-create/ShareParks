@@ -50,7 +50,7 @@ export function DriverVerification() {
     return (
       <div>
         {/* Header — no logo (comes from top bar) */}
-        <div className="bg-gray-800 px-4 py-5 flex items-center justify-center relative">
+        <div className="bg-gray-800 px-4 py-5 text-center relative">
           <a href="/demo?r=renter&s=home" className="absolute right-4 top-5 text-gray-400 text-sm">חזרה →</a>
           <h2 className="text-xl font-black text-white">🛡️ אימות נהג</h2>
           <p className="text-sm text-gray-400 mt-1">אימות חד פעמי כדי להזמין חניות</p>
