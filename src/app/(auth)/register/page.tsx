@@ -48,7 +48,7 @@ export default function RegisterPage() {
     } else {
       setSuccess(true);
       setTimeout(() => {
-        window.location.href = '/demo';
+        window.location.href = isOwner ? '/demo?r=owner&s=home' : '/demo?r=renter&s=home';
       }, 1500);
     }
   }

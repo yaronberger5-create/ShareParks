@@ -36,7 +36,10 @@ export default function LoginPage() {
     if (authError) {
       setError('אימייל או סיסמה שגויים');
     } else {
-      window.location.href = '/demo';
+      // Detect role and redirect
+      const { data: { user } } = await supabase.auth.getUser();
+      const isOwner = user?.user_metadata?.is_owner === true;
+      window.location.href = isOwner ? '/demo?r=owner&s=home' : '/demo?r=renter&s=home';
     }
   }
 

@@ -33,50 +33,28 @@ export function DemoScreens({ screen }: { screen: ScreenType }) {
 function RenterHome() {
   const userName = useUserName();
   return (
-    <div className="px-4 py-5 space-y-4">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center">
-          <span className="text-base font-black text-white">{userName.charAt(0)}</span>
-        </div>
-        <div>
-          <h1 className="text-lg font-black text-black">שלום, {userName} 👋</h1>
-          <p className="text-xs text-gray-400">מחפש חניה? בוא נמצא לך.</p>
-        </div>
-      </div>
-      {/* Search bar */}
-      <a href="/demo?r=renter&s=verify-driver" className="block w-full rounded-2xl bg-gray-50 border border-gray-200 px-4 py-4 active:bg-gray-100 transition-colors">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">🔍</span>
-          <div>
-            <p className="text-base font-bold text-gray-400">לאן נוסעים?</p>
-            <p className="text-xs text-gray-300">חפש כתובת, עיר או חניה</p>
+    <div className="min-h-[calc(100dvh-78px)] flex flex-col">
+      {/* Hero */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
+        {/* Logo */}
+        <div className="flex items-center gap-2.5 mb-8">
+          <div className="w-14 h-14 rounded-xl bg-orange-500 flex items-center justify-center">
+            <span className="text-lg font-black text-white">P</span>
           </div>
+          <span className="text-3xl font-black tracking-tight">
+            <span className="text-black">Share</span>
+            <span className="text-orange-500">Parks</span>
+          </span>
         </div>
-      </a>
-      <a href="/demo?r=renter&s=locate" className="block w-full py-4 rounded-2xl bg-orange-500 text-white text-lg font-black text-center shadow-xl shadow-orange-200">📍 חפש ליד המיקום שלי</a>
-      <div className="bg-green-50 rounded-2xl border border-green-200 p-4">
-        <div className="flex items-center gap-2 mb-2"><div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse" /><span className="text-sm font-bold text-green-700">חניה פעילה</span></div>
-        <p className="font-bold text-black">אגס 9, אשדוד</p>
-        <p className="text-xs text-gray-500 mb-3">עד 17:00 · 45₪</p>
-        <a href="/demo?r=renter&s=session" className="block w-full py-2.5 rounded-xl bg-gray-800 text-white text-sm font-bold text-center">⏱️ עבור לחניה חיה</a>
-      </div>
-      <a href="/demo?r=renter&s=verify-driver" className="block bg-orange-50 rounded-2xl border border-orange-200 p-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-xl">🛡️</div>
-          <div className="flex-1"><p className="text-sm font-bold text-orange-700">אמת את החשבון שלך</p><p className="text-xs text-orange-500">אימות חד פעמי כדי להזמין חניה</p></div>
-        </div>
-      </a>
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-bold text-black">הזמנות אחרונות</h3>
-          <a href="/demo?r=renter&s=bookings" className="text-xs text-orange-500 font-bold">הכל →</a>
-        </div>
-        {[{ addr: 'הבנקים 3', price: 72, date: 'אתמול' }, { addr: 'רוגוזין 12', price: 40, date: '15/04' }].map((b) => (
-          <div key={b.addr} className="flex items-center justify-between bg-gray-50 rounded-xl border border-gray-100 px-4 py-3 mb-2">
-            <div><p className="text-sm font-bold text-black">{b.addr}</p><p className="text-xs text-gray-400">{b.date}</p></div>
-            <span className="text-sm font-bold text-black">{b.price}₪ ✓</span>
-          </div>
-        ))}
+
+        {/* Greeting */}
+        <h1 className="text-2xl font-black text-black mb-2">שלום, {userName} 👋</h1>
+        <p className="text-gray-500 mb-10">מצא חניה פנויה ליד המיקום שלך בלחיצה אחת</p>
+
+        {/* CTA */}
+        <a href="/demo?r=renter&s=verify-driver" className="w-full py-5 rounded-2xl bg-orange-500 text-white text-xl font-black text-center shadow-xl shadow-orange-200 block active:scale-[0.97] transition-transform">
+          📍 אני צריך חניה
+        </a>
       </div>
     </div>
   );
@@ -86,39 +64,91 @@ function OwnerHome() {
   const userName = useUserName();
   return (
     <div className="px-4 py-5 space-y-4">
-      <div className="flex items-center gap-3 mb-2">
-        <div className="w-12 h-12 rounded-xl bg-gray-800 flex items-center justify-center"><span className="text-base font-black text-orange-500">{userName.charAt(0)}</span></div>
-        <div><h1 className="text-lg font-black text-black">שלום, {userName} 👋</h1><p className="text-xs text-gray-400">הנה מה שקורה בחניה שלך.</p></div>
+      {/* Logo + greeting */}
+      <div className="text-center mb-2">
+        <div className="flex items-center justify-center gap-2.5 mb-3">
+          <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center">
+            <span className="text-base font-black text-white">P</span>
+          </div>
+          <span className="text-2xl font-black tracking-tight">
+            <span className="text-black">Share</span>
+            <span className="text-orange-500">Parks</span>
+          </span>
+        </div>
+        <h1 className="text-xl font-black text-black">שלום, {userName} 👋</h1>
+        <p className="text-xs text-gray-400">נהל את החניה שלך והתחל להרוויח</p>
       </div>
+
+      {/* Parking status + open/close */}
       <div className="bg-white rounded-2xl border border-gray-200 p-4">
         <div className="flex items-center justify-between mb-3">
-          <div><h3 className="font-bold text-black">🅿️ אגס 9, אשדוד</h3><p className="text-xs text-green-600 font-medium">פנויה · מופיעה בחיפוש</p></div>
+          <h3 className="font-bold text-black">🅿️ אגס 9, אשדוד</h3>
           <div className="px-3 py-1.5 rounded-full bg-green-100 text-green-700 text-xs font-bold">🟢 פנוי</div>
         </div>
         <div className="grid grid-cols-2 gap-2 mb-2">
-          <a href="/demo?r=owner&s=dashboard" className="py-3 rounded-xl bg-green-500 text-white text-sm font-bold text-center shadow-lg shadow-green-200">🟢 פנוי</a>
-          <a href="/demo?r=owner&s=dashboard" className="py-3 rounded-xl bg-gray-100 text-gray-400 text-sm font-bold text-center">🔴 סגור</a>
+          <a href="/demo?r=owner&s=dashboard" className="py-3.5 rounded-xl bg-green-500 text-white text-base font-bold text-center shadow-lg shadow-green-200">🟢 פתח חניה</a>
+          <a href="/demo?r=owner&s=dashboard" className="py-3.5 rounded-xl bg-gray-100 text-gray-400 text-base font-bold text-center">🔴 סגור חניה</a>
         </div>
-        <div className="bg-green-50 rounded-xl px-3 py-2 flex items-center justify-between">
-          <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /><span className="text-xs text-green-700 font-bold">פנויה עד 17:00</span></div>
-          <a href="/demo?r=owner&s=dashboard" className="text-[10px] text-green-600 font-bold">שנה</a>
+        <div className="bg-green-50 rounded-xl px-4 py-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-xs text-green-700 font-bold">פנויה עד 17:00</span>
+          </div>
+          <a href="/demo?r=owner&s=dashboard" className="text-xs text-green-600 font-bold">שנה ←</a>
         </div>
       </div>
+
+      {/* Who is parked */}
       <div className="bg-orange-50 rounded-2xl border border-orange-200 p-4">
-        <div className="flex items-center justify-between mb-2"><div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" /><span className="text-sm font-bold text-orange-700">שוכר פעיל</span></div><span className="text-lg font-black text-black">45₪</span></div>
-        <div className="flex items-center gap-3 mb-3"><div className="w-9 h-9 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-bold">ד</div><div><p className="font-bold text-black text-sm">דני כהן</p><p className="text-xs text-gray-400">📞 050-1234567 · עד 17:00</p></div></div>
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-orange-500 animate-pulse" />
+            <span className="text-sm font-bold text-orange-700">שוכר נוכחי</span>
+          </div>
+          <span className="text-lg font-black text-black">45₪</span>
+        </div>
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-10 h-10 rounded-full bg-orange-500 text-white flex items-center justify-center text-sm font-bold">ד</div>
+          <div>
+            <p className="font-bold text-black">דני כהן</p>
+            <p className="text-xs text-gray-400">📞 050-1234567 · עד 17:00</p>
+          </div>
+        </div>
         <a href="/demo?r=owner&s=dashboard" className="block w-full py-2.5 rounded-xl bg-gray-800 text-white text-sm font-bold text-center">💬 שלח הודעה לשוכר</a>
       </div>
+
+      {/* Earnings */}
       <div className="bg-gray-800 rounded-2xl p-5 text-white">
-        <div className="flex items-center justify-between mb-3"><span className="text-sm text-gray-400">הכנסות החודש</span><a href="/demo?r=owner&s=wallet" className="text-xs text-orange-500 font-bold">ארנק →</a></div>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm text-gray-400">הכנסות החודש</span>
+          <a href="/demo?r=owner&s=wallet" className="text-xs text-orange-500 font-bold">ארנק ←</a>
+        </div>
         <p className="text-3xl font-black">840 <span className="text-sm text-gray-400">ש״ח</span></p>
-        <div className="flex gap-4 mt-3 text-xs text-gray-500"><span>12 הזמנות</span><span>★ 4.8 דירוג</span></div>
+        <div className="flex gap-4 mt-2 text-xs text-gray-500">
+          <span>12 הזמנות</span>
+          <span>★ 4.8 דירוג</span>
+          <span>0 דיווחים</span>
+        </div>
       </div>
+
+      {/* Quick links */}
       <div className="grid grid-cols-2 gap-2">
-        <a href="/demo?r=owner&s=dashboard" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center"><span className="text-2xl block mb-1">📊</span><span className="text-xs font-bold text-black">דשבורד מלא</span></a>
-        <a href="/demo?r=owner&s=wallet" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center"><span className="text-2xl block mb-1">💰</span><span className="text-xs font-bold text-black">ארנק ומשיכות</span></a>
-        <a href="/demo?r=owner&s=onboard" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center"><span className="text-2xl block mb-1">➕</span><span className="text-xs font-bold text-black">הוסף חניה</span></a>
-        <a href="/demo?r=owner&s=dashboard" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center"><span className="text-2xl block mb-1">📅</span><span className="text-xs font-bold text-black">זמינות</span></a>
+        <a href="/demo?r=owner&s=dashboard" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center active:scale-95 transition-transform">
+          <span className="text-2xl block mb-1">📊</span>
+          <span className="text-xs font-bold text-black">דשבורד מלא</span>
+        </a>
+        <a href="/demo?r=owner&s=wallet" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center active:scale-95 transition-transform">
+          <span className="text-2xl block mb-1">💰</span>
+          <span className="text-xs font-bold text-black">ארנק ומשיכות</span>
+        </a>
+        <a href="/demo?r=owner&s=onboard" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center active:scale-95 transition-transform">
+          <span className="text-2xl block mb-1">➕</span>
+          <span className="text-xs font-bold text-black">הוסף חניה</span>
+        </a>
+        <a href="/demo?r=owner&s=dashboard" className="py-4 rounded-xl bg-gray-50 border border-gray-200 text-center active:scale-95 transition-transform">
+          <span className="text-2xl block mb-1">📅</span>
+          <span className="text-xs font-bold text-black">עדכן זמינות</span>
+        </a>
       </div>
     </div>
   );
