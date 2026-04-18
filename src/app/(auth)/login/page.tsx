@@ -36,8 +36,7 @@ export default function LoginPage() {
     if (authError) {
       setError('אימייל או סיסמה שגויים');
     } else {
-      router.push('/');
-      router.refresh();
+      window.location.href = '/demo';
     }
   }
 

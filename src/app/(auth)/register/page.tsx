@@ -48,8 +48,7 @@ export default function RegisterPage() {
     } else {
       setSuccess(true);
       setTimeout(() => {
-        router.push('/');
-        router.refresh();
+        window.location.href = '/demo';
       }, 1500);
     }
   }

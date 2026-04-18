@@ -1,8 +1,5 @@
-import { getCurrentUser } from '@/actions/auth-actions';
-import { HomeClient } from './home-client';
+import { redirect } from 'next/navigation';
 
-export default async function HomePage() {
-  const user = await getCurrentUser();
-
-  return <HomeClient isLoggedIn={!!user} isOwner={user?.is_owner ?? false} />;
+export default function HomePage() {
+  redirect('/demo');
 }
