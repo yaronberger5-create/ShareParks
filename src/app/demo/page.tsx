@@ -10,6 +10,7 @@ import { Chatbot } from './chatbot';
 import { SideBarWithButton } from './sidebar';
 import { DriverVerification } from './driver-verification';
 import { DemoScreens } from './demo-screens';
+import { WalletInteractive } from './wallet-interactive';
 import { EvacuationScreen } from './evacuation-screen';
 
 export default function DemoPage() {
@@ -44,8 +45,8 @@ function DemoInner() {
         </nav>
       )}
 
-      {/* Spacer for fixed nav + breathing room */}
-      <div className={role === 'none' ? '' : 'h-[78px]'} />
+      {/* Spacer for fixed nav + orange stripe */}
+      <div className={role === 'none' ? '' : 'h-[78px] bg-orange-500'} />
 
       <div className="w-full bg-white min-h-[calc(100dvh-78px)]">
         {/* Home */}
@@ -66,7 +67,7 @@ function DemoInner() {
         {/* Owner */}
         {screen === 'onboard' && <OwnerOnboardInteractive />}
         {screen === 'dashboard' && <DashboardInteractive />}
-        {screen === 'wallet' && <DemoScreens screen="wallet" />}
+        {screen === 'wallet' && <WalletInteractive />}
 
         {/* Evacuation */}
         {screen === 'evacuate' && <EvacuationScreen onConfirm={() => {}} />}

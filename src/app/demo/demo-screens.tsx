@@ -173,18 +173,178 @@ function Terms() {
         </a>
         <h1 className="text-lg font-bold">📋 תקנון</h1>
       </div>
-      <div className="px-4 py-5 space-y-4 text-sm text-gray-600 leading-relaxed">
-        <h2 className="text-base font-black text-black">1. הגדרות</h2>
-        <p><strong>&quot;השירות&quot;</strong> — פלטפורמת ShareParks. <strong>&quot;משכיר&quot;</strong> — בעל חניה. <strong>&quot;שוכר&quot;</strong> — משתמש המזמין. <strong>&quot;עמלה&quot;</strong> — 10%.</p>
-        <h2 className="text-base font-black text-black">2. תשלומים</h2>
-        <p>ביטול עד שעה לפני — החזר מלא. חניה תפוסה — החזר אוטומטי. Overtime — x1.5.</p>
-        <h2 className="text-base font-black text-black">3. ביטוח</h2>
-        <p>ביטוח נזקים עד 50,000 ש&quot;ח. דיווח תוך 24 שעות.</p>
-        <h2 className="text-base font-black text-black">4. פרטיות</h2>
-        <p>שרתי Supabase (SOC2). GPS רק בחיפוש. כרטיסי אשראי לא נשמרים.</p>
-        <h2 className="text-base font-black text-black">5. צור קשר</h2>
-        <p>📧 support@shareparks.com · 📞 *6275</p>
-        <a href="/demo?s=home" className="block w-full py-3 rounded-xl bg-gray-800 text-white text-sm font-bold text-center mt-4">🏠 חזרה לדף הבית</a>
+      {/* Tab navigation */}
+      <div className="flex overflow-x-auto no-scrollbar border-b border-gray-200 bg-white px-2">
+        {['תקנון', 'פרטיות', 'תנאי שימוש', 'ביטוח', 'שאלות', 'צור קשר'].map((t, i) => (
+          <a key={t} href={`#section-${i}`} className="px-3 py-2.5 text-xs font-bold whitespace-nowrap text-gray-500 hover:text-orange-500 border-b-2 border-transparent hover:border-orange-500">{t}</a>
+        ))}
+      </div>
+
+      <div className="px-4 py-5 space-y-6 text-sm text-gray-600 leading-relaxed">
+
+        {/* תקנון */}
+        <section id="section-0">
+          <h2 className="text-lg font-black text-black mb-3">📋 תקנון ShareParks</h2>
+          <p className="text-xs text-gray-400 mb-3">עדכון אחרון: אפריל 2026</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">1. כללי</h3>
+          <p>ברוכים הבאים ל-ShareParks (&quot;החברה&quot;, &quot;אנחנו&quot;). ShareParks היא פלטפורמה טכנולוגית לשיתוף חניות פרטיות, המחברת בין בעלי חניות פנויות (&quot;משכירים&quot;) לבין נהגים המחפשים חניה (&quot;שוכרים&quot;). השימוש בפלטפורמה מהווה הסכמה מלאה לתנאים המפורטים להלן.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">2. הגדרות</h3>
+          <p><strong>&quot;השירות&quot;</strong> — פלטפורמת ShareParks, לרבות האתר, האפליקציה וכל שירות נלווה.</p>
+          <p><strong>&quot;משכיר&quot;</strong> — בעל חניה פרטית המפרסם אותה להשכרה דרך הפלטפורמה.</p>
+          <p><strong>&quot;שוכר&quot;</strong> — משתמש רשום המזמין חניה דרך הפלטפורמה.</p>
+          <p><strong>&quot;עמלה&quot;</strong> — 10% מסכום ההזמנה, המנוכה מהמשכיר לפני מע&quot;מ.</p>
+          <p><strong>&quot;Overtime&quot;</strong> — חריגה מזמן החניה שהוזמן, בתעריף של 150% מהמחיר הרגיל.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">3. הרשמה ואימות</h3>
+          <p>3.1 ההרשמה לשירות פתוחה לכל אדם מעל גיל 17 בעל רישיון נהיגה בתוקף.</p>
+          <p>3.2 שוכרים נדרשים לעבור תהליך אימות הכולל: תעודת זהות, רישיון נהיגה ורישיון רכב.</p>
+          <p>3.3 משכירים נדרשים לאמת בעלות או זכות שימוש בחניה המפורסמת.</p>
+          <p>3.4 החברה רשאית לסרב לאשר הרשמה או לבטל חשבון ללא הודעה מוקדמת.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">4. תשלומים וביטולים</h3>
+          <p>4.1 התשלום מבוצע באמצעות כרטיס אשראי מאובטח העומד בתקן PCI DSS.</p>
+          <p>4.2 ביטול עד שעה לפני מועד ההזמנה — החזר מלא של 100%.</p>
+          <p>4.3 ביטול תוך השעה שלפני ההזמנה — חיוב של 50% מהסכום.</p>
+          <p>4.4 דיווח &quot;חניה תפוסה&quot; — ביטול אוטומטי והחזר מלא של 100%.</p>
+          <p>4.5 חריגת זמן (Overtime) — חיוב אוטומטי בתעריף של 150% (x1.5) מהמחיר הרגיל.</p>
+          <p>4.6 משיכת כספים למשכירים — שלוש פעמים בחודש: ב-10, ב-20 וב-30 לחודש. עמלת פלטפורמה 10% לפני מע&quot;מ.</p>
+        </section>
+
+        {/* מדיניות פרטיות */}
+        <section id="section-1">
+          <h2 className="text-lg font-black text-black mb-3">🔒 מדיניות פרטיות</h2>
+
+          <h3 className="font-bold text-black mt-4 mb-1">1. מידע שאנו אוספים</h3>
+          <p>אנו אוספים מידע אישי הנחוץ להפעלת השירות, לרבות: שם מלא, כתובת דואר אלקטרוני, מספר טלפון, מספר רכב, ומסמכי זיהוי לצורך אימות.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">2. מיקום (GPS)</h3>
+          <p>נתוני מיקום נאספים אך ורק בעת חיפוש חניה פעיל, ואינם נשמרים לאחר סיום החיפוש. המשתמש יכול לבטל את שיתוף המיקום בכל עת דרך הגדרות המכשיר.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">3. אחסון ואבטחה</h3>
+          <p>המידע מאוחסן בשרתי Supabase המאובטחים (תקן SOC2), הממוקמים באירופה. כל התקשורת מוצפנת בפרוטוקול SSL/TLS. פרטי כרטיסי אשראי לא נשמרים בשרתינו — הם מעובדים ישירות דרך ספק הסליקה.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">4. שיתוף מידע</h3>
+          <p>איננו מוכרים או משתפים מידע אישי עם צדדים שלישיים, למעט: ספקי שירות הנחוצים להפעלת הפלטפורמה (סליקה, SMS), רשויות חוק על פי צו שיפוטי, ומידע סטטיסטי אנונימי.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">5. זכויות המשתמש</h3>
+          <p>לכל משתמש הזכות לבקש: עיון במידע השמור אודותיו, תיקון מידע שגוי, מחיקת המידע (&quot;הזכות להישכח&quot;), וייצוא המידע בפורמט דיגיטלי.</p>
+        </section>
+
+        {/* תנאי שימוש */}
+        <section id="section-2">
+          <h2 className="text-lg font-black text-black mb-3">⚖️ תנאי שימוש</h2>
+
+          <h3 className="font-bold text-black mt-4 mb-1">1. התנהגות משתמשים</h3>
+          <p>המשתמש מתחייב: למסור פרטים מדויקים ועדכניים, לא להשתמש בשירות לצרכים בלתי חוקיים, לכבד את זמני החניה שהוזמנו, ולשמור על ניקיון ותקינות מקום החניה.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">2. אחריות המשכיר</h3>
+          <p>המשכיר מתחייב: שהחניה המפורסמת נמצאת בבעלותו או ברשותו החוקית, שפרטי החניה (כתובת, גודל, הוראות כניסה) מדויקים, ושהחניה תהיה זמינה בזמנים שפורסמו.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">3. אחריות השוכר</h3>
+          <p>השוכר מתחייב: לפנות את החניה בזמן שהוזמן, לא לגרום נזק לחניה או לרכוש הסמוך, ולדווח על כל בעיה דרך מערכת הדיווחים באפליקציה.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">4. השעיה וביטול חשבון</h3>
+          <p>ShareParks שומרת על הזכות להשעות או לבטל חשבון משתמש במקרים של: 3 דיווחי &quot;חניה תפוסה&quot; או יותר, הפרת תנאי שימוש חוזרת, התנהגות פוגענית כלפי משתמשים אחרים, או חשד להונאה.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">5. הגבלת אחריות</h3>
+          <p>ShareParks משמשת כפלטפורמת תיווך בלבד ואינה צד לעסקה בין המשכיר לשוכר. החברה אינה אחראית לנזקים ישירים או עקיפים הנובעים משימוש בחניה, למעט כיסוי הביטוח המפורט בסעיף הביטוח.</p>
+        </section>
+
+        {/* ביטוח ואחריות */}
+        <section id="section-3">
+          <h2 className="text-lg font-black text-black mb-3">🛡️ ביטוח ואחריות</h2>
+
+          <h3 className="font-bold text-black mt-4 mb-1">1. כיסוי ביטוחי</h3>
+          <p>כל הזמנה דרך ShareParks כוללת כיסוי ביטוחי עד 50,000 ש&quot;ח למקרה ביטוח, הכולל: נזק לרכב השוכר בתוך החניה, נזק לרכוש המשכיר שנגרם על ידי השוכר, וגניבת חפצים מהרכב בתוך שטח החניה (עד 5,000 ש&quot;ח).</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">2. תהליך דיווח נזק</h3>
+          <p>יש לדווח על כל נזק תוך 24 שעות מרגע הגילוי, דרך כפתור &quot;דיווח על בעיה&quot; באפליקציה. הדיווח חייב לכלול: תיאור הנזק, צילומים, ותאריך ושעה משוערים. צוות ShareParks יטפל בתביעה תוך 5 ימי עסקים.</p>
+
+          <h3 className="font-bold text-black mt-4 mb-1">3. חריגים</h3>
+          <p>הביטוח אינו מכסה: נזק שנגרם בכוונה, בלאי טבעי, נזק שנגרם מחוץ לשטח החניה, או נזק שלא דווח תוך 24 שעות.</p>
+        </section>
+
+        {/* שאלות נפוצות */}
+        <section id="section-4">
+          <h2 className="text-lg font-black text-black mb-3">❓ שאלות נפוצות</h2>
+
+          <div className="space-y-3">
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">איך מוצאים חניה?</p>
+              <p>לחצו על &quot;חפש חניה&quot;, אשרו מיקום GPS או הקלידו כתובת, בחרו משך חניה — ותקבלו רשימה של חניות זמינות ממוינות לפי מרחק.</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">כמה זה עולה?</p>
+              <p>המחיר נקבע על ידי בעל החניה ומוצג בשקיפות מלאה. אין עלויות נסתרות. שוכרים משלמים את המחיר המוצג, ומשכירים מקבלים 90% (אחרי עמלה).</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">מה קורה אם החניה תפוסה?</p>
+              <p>לחצו &quot;דיווח על בעיה&quot; → &quot;החניה תפוסה&quot;. ההזמנה תבוטל אוטומטית ותקבלו החזר מלא של 100% מיידי.</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">איך משכירים חניה?</p>
+              <p>לחצו &quot;יש לי חניה להשכרה&quot;, מלאו כתובת, צלמו את החניה, הגדירו מחיר ושעות זמינות — ותתחילו להרוויח. ההרשמה לוקחת 3 דקות.</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">מתי אני מקבל את הכסף?</p>
+              <p>משיכת כספים מתבצעת ב-3 מועדים קבועים בחודש: 10, 20 ו-30. הכסף מועבר לחשבון הבנק תוך 1-3 ימי עסקים. עמלה: 10% + מע&quot;מ.</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">מה קורה אם בעל החניה חוזר מוקדם?</p>
+              <p>בעל החניה לוחץ &quot;חזרתי הביתה&quot;, אתם מקבלים התראה עם טיימר של 5 דקות לפנות. החיוב מותאם לזמן השימוש בפועל (מינימום 50%).</p>
+            </div>
+            <div className="bg-gray-50 rounded-xl border border-gray-100 p-4">
+              <p className="font-bold text-black mb-1">האם המידע שלי מאובטח?</p>
+              <p>כן. אנו משתמשים בהצפנת SSL, שרתים מאובטחים (SOC2), ולא שומרים פרטי כרטיס אשראי. מסמכי אימות מאוחסנים בצורה מוצפנת.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* צור קשר */}
+        <section id="section-5">
+          <h2 className="text-lg font-black text-black mb-3">📞 צור קשר</h2>
+
+          <div className="bg-gray-50 rounded-2xl border border-gray-200 p-5 space-y-4">
+            <p className="text-sm text-gray-600">נשמח לעמוד לשירותכם בכל שאלה, בקשה או הצעה. צוות ShareParks זמין עבורכם:</p>
+
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-4 py-3">
+                <span className="text-xl">📧</span>
+                <div>
+                  <p className="text-sm font-bold text-black">דואר אלקטרוני</p>
+                  <p className="text-xs text-orange-500">support@shareparks.com</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-4 py-3">
+                <span className="text-xl">📞</span>
+                <div>
+                  <p className="text-sm font-bold text-black">טלפון</p>
+                  <p className="text-xs text-orange-500">*6275 (ShareParks)</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-4 py-3">
+                <span className="text-xl">💬</span>
+                <div>
+                  <p className="text-sm font-bold text-black">צ׳אט באפליקציה</p>
+                  <p className="text-xs text-gray-400">לחצו על כפתור הצ׳אט (💬) בכל מסך</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white rounded-xl border border-gray-100 px-4 py-3">
+                <span className="text-xl">🕐</span>
+                <div>
+                  <p className="text-sm font-bold text-black">שעות פעילות</p>
+                  <p className="text-xs text-gray-400">ימים א׳-ה׳, 08:00-20:00 · שישי 08:00-13:00</p>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-xs text-gray-400 text-center mt-2">ShareParks בע&quot;מ · ח.פ. 516XXXXXX · אשדוד, ישראל</p>
+          </div>
+        </section>
+
+        <a href="/" className="block w-full py-3 rounded-xl bg-gray-800 text-white text-sm font-bold text-center mt-4">🏠 חזרה לדף הבית</a>
       </div>
     </div>
   );
